@@ -28,9 +28,6 @@ type Training struct {
 // количество_повторов * длина_шага / м_в_км
 func (t Training) distance() float64 {
 	// вставьте ваш код ниже
-	if MInKm == 0 {
-		panic("Oh NO! Wrong value")
-	}
 	return float64(t.Action) * t.LenStep / MInKm
 }
 
@@ -38,7 +35,7 @@ func (t Training) distance() float64 {
 func (t Training) meanSpeed() float64 {
 	// вставьте ваш код ниже
 	if t.Duration.Hours() == 0 {
-		panic("Oh NO! Wrong value")
+		return 0
 	}
 	return t.distance() / t.Duration.Hours()
 }
@@ -108,9 +105,6 @@ type Running struct {
 // Это переопределенный метод Calories() из Training.
 func (r Running) Calories() float64 {
 	// вставьте ваш код ниже
-	if MInKm == 0 {
-		panic("Oh NO! Wrong value")
-	}
 	return ((CaloriesMeanSpeedMultiplier*r.meanSpeed() + CaloriesMeanSpeedShift) * r.Weight / MInKm * r.Duration.Hours() * MinInHours)
 }
 
@@ -149,7 +143,7 @@ type Walking struct {
 func (w Walking) Calories() float64 {
 	// вставьте ваш код ниже
 	if w.Height == 0 {
-		panic("Oh NO! Wrong height")
+		return 0
 	}
 	return float64((CaloriesWeightMultiplier*w.Weight + (math.Pow(w.meanSpeed(), 2)/w.Height)*CaloriesSpeedHeightMultiplier*w.Weight) * float64(w.Duration.Hours()) * MinInHours)
 }
@@ -188,8 +182,8 @@ type Swimming struct {
 // Это переопределенный метод Calories() из Training.
 func (s Swimming) meanSpeed() float64 {
 	// вставьте ваш код ниже
-	if MInKm == 0 || s.Duration.Hours() == 0 {
-		panic("Oh NO! Wrong value")
+	if s.Duration.Hours() == 0 {
+		return 0
 	}
 	return float64(s.LengthPool) * float64(s.CountPool) / MInKm / s.Duration.Hours()
 }

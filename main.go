@@ -28,6 +28,9 @@ type Training struct {
 // количество_повторов * длина_шага / м_в_км
 func (t Training) distance() float64 {
 	// вставьте ваш код ниже
+	if MInKm == 0 {
+		panic("Oh NO! Wrong value")
+	}
 	return float64(t.Action) * t.LenStep / MInKm
 }
 
